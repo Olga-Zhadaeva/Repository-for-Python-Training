@@ -26,9 +26,8 @@ class Test_Add_Contact(unittest.TestCase):
         wd.find_element(By.LINK_TEXT, "add new").click()
 
     def create_contact(self, wd, contact):
-        # init contact creation
-        wd.find_element(By.NAME, "firstname").click()
         # fill contact form
+        wd.find_element(By.NAME, "firstname").click()
         wd.find_element(By.NAME, "firstname").clear()
         wd.find_element(By.NAME, "firstname").send_keys(contact.firstname)
         wd.find_element(By.NAME, "middlename").click()
@@ -75,19 +74,15 @@ class Test_Add_Contact(unittest.TestCase):
         wd.find_element(By.NAME, "homepage").send_keys(contact.homepage)
         wd.find_element(By.NAME, "bday").click()
         Select(wd.find_element(By.NAME, "bday")).select_by_visible_text(contact.bday)
-        wd.find_element(By.XPATH, "//option[@value='1']").click()
         wd.find_element(By.NAME, "bmonth").click()
         Select(wd.find_element(By.NAME, "bmonth")).select_by_visible_text(contact.bmonth)
-        wd.find_element(By.XPATH, "//option[@value='January']").click()
         wd.find_element(By.NAME, "byear").click()
         wd.find_element(By.NAME, "byear").clear()
         wd.find_element(By.NAME, "byear").send_keys(contact.byear)
         wd.find_element(By.NAME, "aday").click()
         Select(wd.find_element(By.NAME, "aday")).select_by_visible_text(contact.aday)
-        wd.find_element(By.XPATH, "//div[@id='content']/form/select[3]/option[4]").click()
         wd.find_element(By.NAME, "amonth").click()
         Select(wd.find_element(By.NAME, "amonth")).select_by_visible_text(contact.amonth)
-        wd.find_element(By.XPATH, "//div[@id='content']/form/select[4]/option[3]").click()
         wd.find_element(By.NAME, "ayear").click()
         wd.find_element(By.NAME, "ayear").clear()
         wd.find_element(By.NAME, "ayear").send_keys(contact.ayear)
