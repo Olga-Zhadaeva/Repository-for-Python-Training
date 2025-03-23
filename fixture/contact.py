@@ -110,5 +110,6 @@ class ContactHelper:
 
     def count(self):
         wd = self.app.wd
-        self.open_home_page()
+        if not (wd.current_url.endswith('/index.php')):
+            self.open_home_page()
         return len(wd.find_elements(By.NAME, "selected[]"))
