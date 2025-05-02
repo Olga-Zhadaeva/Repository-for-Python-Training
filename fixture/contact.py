@@ -140,3 +140,36 @@ class ContactHelper:
                 self.contact_cache.append(
                     Contact(firstname=firstname, lastname=lastname, id=id))
         return list(self.contact_cache)
+
+    def select_group_in_group_list_by_id(self, group_id):
+        wd = self.app.wd
+        select = wd.find_element(By.NAME, "to_group")
+        group_in_group_list = select.find_element(By.CSS_SELECTOR, "option[value='%s']" % group_id)
+        self.group_name = group_in_group_list.text
+        group_in_group_list.click()
+
+    def return_to_group_page_name(self):
+        wd = self.app.wd
+        wd.find_element(By.LINK_TEXT, f'group page "{self.group_name}"').click()
+
+    def add_contact_in_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.open_home_page()
+        self.select_contact_by_id(contact_id)
+        self.select_group_in_group_list_by_id(group_id)
+        wd.find_element(By.NAME, "add").click()
+        self.return_to_group_page_name()
+
+    def select_group_in_filter_by_id(self, group_id):
+        wd = self.app.wd
+        select = wd.find_element(By.NAME, "group")
+        group_in_group_list = select.find_element(By.CSS_SELECTOR, "option[value='%s']" % group_id)
+        self.group_name = group_in_group_list.text
+        group_in_group_list.click()
+
+    def delete_contact_in_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.select_group_in_filter_by_id(group_id)
+        self.select_contact_by_id(contact_id)
+        wd.find_element(By.NAME, "remove").click()
+        self.return_to_group_page_name()
