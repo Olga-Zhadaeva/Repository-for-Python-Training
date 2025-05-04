@@ -11,12 +11,24 @@ def test_add_contact_in_group(app, orm):
                             mobile="188888888888", work="189888888888", fax="189988888888", email="1Ivan@gmail.com", email2="1Ivan@mail.ru",
                             email3="1Iban@yandex.ru", homepage="1something", bday="2", bmonth="February", byear="2002", aday="3", amonth="March", ayear="2003"))
 
-    list_groups_ui = app.group.get_group_list()
-    list_contacts_ui = app.contact.get_contact_list()
+    groups = orm.get_group_list()
+    all_contacts = orm.get_contact_list()
+    all_contacts_in_group = []
+    group_for_add = random.choice(groups)
+    contact_for_add = None
 
-    group = random.choice(list_groups_ui)
-    contact = random.choice(list_contacts_ui)
-    app.contact.add_contact_in_group(contact.id, group.id)
+    for group in groups:
+        all_contacts_in_group.extend(orm.get_contacts_in_group(group))
 
-    contact_in_group = orm.get_contacts_in_group(group)
-    assert contact.id in [c.id for c in contact_in_group]
+    for contact in all_contacts:
+        if contact not in all_contacts_in_group:
+            contact_for_add = contact
+            break
+
+    if contact_for_add is None:
+        app.contact.create(Contact(firstname="1Ivan", middlename="1Ivanovich", lastname="1Ivanov", nickname="1Vanya"))
+        contact_for_add = orm.get_contact_list()[-1]
+
+    app.contact.add_contact_in_group(contact_for_add.id, group_for_add.id)
+    contacts_in_group = orm.get_contacts_in_group(group_for_add)
+    assert contact_for_add.id in [c.id for c in contacts_in_group]
