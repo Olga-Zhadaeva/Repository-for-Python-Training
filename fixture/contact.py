@@ -61,6 +61,7 @@ class ContactHelper:
         wd = self.app.wd
         self.open_home_page()
         self.select_contact_by_id(id)
+        wd.find_element(By.CSS_SELECTOR, f"a[href='edit.php?id={id}']").click()
         self.fill_contact_form(new_contact_data)
         # submit contact update
         wd.find_element(By.NAME, "update").click()
